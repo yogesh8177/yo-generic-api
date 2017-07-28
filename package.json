@@ -1,0 +1,19 @@
+{
+  "name": "yo-generic-api",
+  "version": "1.0.6",
+  "description": "generic api for basic CRUD operations",
+  "main": "yo-generic-api.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "api",
+    "generic"
+  ],
+  "author": "Yogesh R. Jadhav",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^4.11.4",
+    "slugify": "^1.1.0"
+  }
+}
