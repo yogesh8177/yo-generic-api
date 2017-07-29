@@ -1,6 +1,6 @@
 {
     "name": "yo-generic-api",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "generic api for basic CRUD operations",
     "main": "yo-generic-api.js",
     "scripts": {
