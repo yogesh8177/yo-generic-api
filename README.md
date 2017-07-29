@@ -34,8 +34,15 @@ You can create new instance of generic-api for different resources. A resource i
 # Steps to use
 
 require('yo-generic-api')
-const Resource = require('yo-generic-api').Resource;
+const Resource = require('yo-generic-api').Resource
 const user = new Resource()
 user.init(app, config)
 
 ## Note: app parameter should have mongoose model attached for database calls to work. Eg: app.db.models.User
+
+Current working routes:
+
+get: Fetch Items (use queryStrings for searching)
+post: Create an item
+put: Update items (use queryStrings for creating filters)
+delete: Delete items (Use ?operator=in&by=id for deleting multiple items by _id, also pass array of id:['1st id','2nd id'] as body)
