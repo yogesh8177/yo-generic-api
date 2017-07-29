@@ -350,8 +350,8 @@ var self = module.exports.Resource = function() {
         this.createQuery = (params, operator, operatorHint = null, fieldArray = []) => {
 
             /* If we have more than one param*/
-            const _operator = operator.slice();
-            const _operatorHint = operatorHint.slice();
+            const _operator = operator ? operator.slice() : null;
+            const _operatorHint = operatorHint ? operatorHint.slice() : null;
             const _fieldArray = fieldArray.length > 0 ? fieldArray.slice() : [];
 
             this.cleanParams(params);
