@@ -1,6 +1,7 @@
 var constants = require('./demo-config');
 var mongoose = require('mongoose');
 var slugify = require('slugify');
+const async = require('async');
 
 var methodsList = [];
 var paths = [];
@@ -10,6 +11,7 @@ var modifiersList = {};
 var model = null;
 var modifiers = false;
 var modifierRules = {};
+let middlewares = [];
 
 var self = module.exports.Resource = function() {
 
@@ -18,6 +20,7 @@ var self = module.exports.Resource = function() {
             this.model(config.model);
             this.enableModifiers(config.enableModifiers, config.modifierRules);
             this.methods(config.methods);
+            //this.registerMiddleWares(config.middlewares);
             this.registerRoutes(app, config.path, config.paramsArray);
             this.setParamRulesList(config.paramsRulesList);
         },
@@ -29,6 +32,10 @@ var self = module.exports.Resource = function() {
         this.enableModifiers = (_set, rules) => {
             modifiers = _set;
             modifierRules = rules;
+        },
+
+        this.setMiddlewares = (_middlewares = []) => {
+            middlewares = _middlewares;
         },
 
         this.methods = (_methodsList) => {
@@ -58,6 +65,23 @@ var self = module.exports.Resource = function() {
                 }
             });
             return paths;
+        },
+        /*All middlewares that will be fired before hitting routes */
+        this.registerMiddleWares = (app) => {
+            app.use((req, res, next) => {
+                middlewares.forEach((item) => {
+                    item.bind(null, req, res);
+                });
+
+                async.series(middlewares, function(err) {
+                    if (err) {
+                        console.log('There was a problem running the middleware!');
+                        return next(err);
+                    }
+                    // all middleware has been run
+                    next();
+                });
+            });
         },
 
         this.validateRulesListMisMatch = (_paramsRulesList) => {
